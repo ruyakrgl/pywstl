@@ -216,7 +216,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Acknowledgments
 
-Developed at the University of Michigan and Toyota Research Institute. This library is part of ongoing research.
+Developed at the University of Michigan. This library is part of ongoing research.
 
 ## Contact
 
