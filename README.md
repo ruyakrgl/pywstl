@@ -28,6 +28,11 @@ pip install -e .
 - NumPy ≥ 1.20
 - PyTorch ≥ 2.0 *(optional — required only for the `torch` backend)*
 
+To install the package with _torch_ support:
+```bash
+pip install -e ".[torch]"
+````
+
 
 ## Examples
 
@@ -56,7 +61,8 @@ phi2 = y <= 3.0  # LessThan predicate
 
 The recommended way to build formulas is through the top-level unified API.
 These classes automatically use whichever backend is currently active.
-Default is numpy, but you can switch to torch with `pywstl.set_backend('torch')`.
+Default is numpy, but you can switch to Torch with `pywstl.set_backend('torch')`
+(make sure you ran `pip install -e ".[torch]"` before following up)_.
 
 ```python
 from pywstl import Always, Eventually, And, Or
@@ -161,6 +167,7 @@ print(f" Robustness value: {rho.item()}, data type: {type(rho)}")
 
 ```python
 import pywstl
+import torch
 from pywstl import Signal
 from pywstl import Always, GreaterThan
 
@@ -176,6 +183,19 @@ print(rho.grad_fn)  # supports autograd
 
 pywstl.reset_backend()
 ```
+
+### Run tests
+```bash
+pip install -e ".[dev]"
+python3 -m pytest
+```
+
+And, lint + format:
+```bash
+python3 -m mypy .
+python3 -m black .
+```
+
 ---
 
 ## Module Overview
