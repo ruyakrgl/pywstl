@@ -62,7 +62,7 @@ phi2 = y <= 3.0  # LessThan predicate
 The recommended way to build formulas is through the top-level unified API.
 These classes automatically use whichever backend is currently active.
 Default is numpy, but you can switch to Torch with `pywstl.set_backend('torch')`
-(make sure you ran `pip install -e ".[torch]"` before following up)_.
+_(make sure you ran `pip install -e ".[torch]"` before following up)_.
 
 ```python
 from pywstl import Always, Eventually, And, Or
