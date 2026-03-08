@@ -22,6 +22,8 @@ torch tensors and converts them to numpy for storage.
 Author: Ruya Karagulle
 Last Update: February 2026
 """
+from typing import Any
+
 import numpy as np
 
 from pywstl import backend as backend_module
@@ -35,6 +37,11 @@ try:
     _TORCH_AVAILABLE = True
 except ImportError:
     _TORCH_AVAILABLE = False
+
+    class _TorchDummy:
+        Tensor = Any
+
+    torch = _TorchDummy()  # type: ignore
 
 
 # ================= SIGNAL CLASS =====================
