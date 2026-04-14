@@ -9,6 +9,8 @@ This module provides core operations for WSTL computations.
 Author: Ruya Karagulle
 Last Update: February 2026
 """
+from typing import Any
+
 import numpy as np
 
 try:
@@ -17,6 +19,12 @@ try:
     _TORCH_AVAILABLE = True
 except ImportError:
     _TORCH_AVAILABLE = False
+
+    # Create a dummy module for type hints
+    class _TorchDummy:
+        Tensor = Any
+
+    torch = _TorchDummy()  # type: ignore
 
 LARGE_NUMBER = 10**6
 
@@ -78,8 +86,11 @@ class wstlMaxTorch:
         Returns:
             Tensor with maximum values, keeping dimensions
         """
-        assert isinstance(x, torch.Tensor), f"Input should be a torch tensor but got {type(x)}."
-        return torch.max(x, dim=axis, keepdim=True)[0]
+        if _TORCH_AVAILABLE:
+            assert isinstance(x, torch.Tensor), f"Input should be a torch tensor but got {type(x)}."
+            return torch.max(x, dim=axis, keepdim=True)[0]
+        else:
+            raise RuntimeError("Torch backend operation requested but Torch not available")
 
 
 class wstlMinTorch:
@@ -96,5 +107,8 @@ class wstlMinTorch:
         Returns:
             Tensor with minimum values, keeping dimensions
         """
-        assert isinstance(x, torch.Tensor), f"Input should be a torch tensor but got {type(x)}."
-        return torch.min(x, dim=axis, keepdim=True)[0]
+        if _TORCH_AVAILABLE:
+            assert isinstance(x, torch.Tensor), f"Input should be a torch tensor but got {type(x)}."
+            return torch.min(x, dim=axis, keepdim=True)[0]
+        else:
+            raise RuntimeError("Torch backend operation requested but Torch not available")

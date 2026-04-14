@@ -21,11 +21,9 @@ Classes:
 Author: Ruya Karagulle
 Date: February 2026
 """
-
 import logging
-from typing import Optional, List
+from typing import Any, Optional, List
 
-import torch
 import numpy as np
 
 # Import base classes from pywstl
@@ -34,6 +32,21 @@ from pywstl.utils import get_signal_shape
 from pywstl.validation import Validator
 
 logger = logging.getLogger(__name__)
+
+try:
+    import torch
+
+    _TORCH_AVAILABLE = True
+except ImportError:
+    _TORCH_AVAILABLE = False
+
+    # Create a dummy module for type hints
+    class _TorchDummy:
+        nn = Any
+        nn.Module = Any
+        Tensor = Any
+
+    torch = _TorchDummy()  # type: ignore
 
 
 # ================= BASE FORMULA CLASS (TORCH VERSION) =================
