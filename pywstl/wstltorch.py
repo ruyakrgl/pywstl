@@ -40,10 +40,16 @@ try:
 except ImportError:
     _TORCH_AVAILABLE = False
 
-    # Create a dummy module for type hints
+    # Create a dummy module so torch.nn.Module can serve as a base class
+    class _DummyModule:
+        def __init__(self, *args, **kwargs):
+            pass
+
+    class _DummyNN:
+        Module = _DummyModule
+
     class _TorchDummy:
-        nn = Any
-        nn.Module = Any
+        nn = _DummyNN()
         Tensor = Any
 
     torch = _TorchDummy()  # type: ignore
